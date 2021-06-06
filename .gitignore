@@ -1,0 +1,11 @@
+# Environment settings
+/.vscode
+
+# Build directory
+/target
+
+# Cargo temporaries
+/Cargo.lock
+
+# Built extern dynamic libraries
+*.dll
