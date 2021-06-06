@@ -28,9 +28,10 @@ fn get_game_config() -> game_of_life_io::Config {
 pub fn main() -> Result<(), Box<dyn std::error::Error>> {
     let window_config = get_window_config()?;
 
-    let game = game_of_life::GameOfLife::create_random(
+    let game = game_of_life::Game::create_random(
         window_config.size.cells_in_width.try_into()?,
         window_config.size.cells_in_height.try_into()?,
+        game_of_life::rules::ConwayWrapped{}
     );
     let game = std::cell::RefCell::new(game);
 
@@ -41,7 +42,7 @@ pub fn main() -> Result<(), Box<dyn std::error::Error>> {
     game_of_life_io::add_step_update_cb_to_handler(&mut callback_handler, &game, &game_config);
 
     callback_handler.add_frame_cb_data(|window_data| {
-        game_of_life_io::display_game(window_data, &game.borrow())
+        game_of_life_io::display_game(window_data, &game.borrow().board)
     });
 
     callback_handler.add_event_cb(|event| {

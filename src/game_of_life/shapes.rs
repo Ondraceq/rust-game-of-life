@@ -1,5 +1,3 @@
-use super::GameOfLife;
-
 #[derive(Debug, Default, Clone)]
 pub struct Shape {
     // Points are stored in range [0,size)
@@ -42,11 +40,11 @@ impl Shape {
         (center.0 + pos.0, center.1 + pos.1)
     }
 
-    pub fn add(&self, game: &mut GameOfLife, pos: (i32, i32)) -> Option<()> {
+    pub fn add(&self, board: &mut super::Board, pos: (i32, i32)) -> Option<()> {
         let center = self.center_at_pos(pos);
         self.shape
             .iter()
-            .map(|(x, y)| game.set(center.0 + x, center.1 + y, true))
+            .map(|(x, y)| board.set(center.0 + x, center.1 + y, true))
             .collect()
     }
 }
